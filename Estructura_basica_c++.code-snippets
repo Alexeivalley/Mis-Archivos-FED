@@ -1,0 +1,15 @@
+{
+	"Estructura inicial c++": {
+		"prefix": "cpp",
+		"body": [
+			"#include <iostream>",
+			"",
+			"int main()",
+			"{",
+			"	std::cout << \"Mi primer snipper\" << std::endl;",
+			"	return 0;",
+			"}"
+		],
+		"description": "Estructura inicial c++"
+	}
+}
