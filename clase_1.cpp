@@ -4,7 +4,7 @@
 
 std::string GenerarCupon(std::string prefix){
     // generar aleatorio
-    std::srand(std::time(0));
+    std::srand(std::time(NULL));
     int RandomNumber = 100 + rand() % 900;
     // concatenar el prefijo y el número aleatorio
 
@@ -32,7 +32,14 @@ void VerificarCupon(std::string cupon){
 
 int main(){
 
-    std::string cupon_generado;
+    //Solicitar la cantidad de cupones a generar
+    int cantidad_cupones = 0;
+    std::string cupon_generado[cantidad_cupones];
+
+    std::cout << "Ingrese la cantidad de cupones a generar: " << std::endl;
+    std::cin >> cantidad_cupones;
+
+    //Almacenar en un arreglo
 
     std::string prefix;
     std::cout << "Ingrese las letras del cupon: " << std::endl;
@@ -47,5 +54,4 @@ int main(){
     VerificarCupon(CouponGenerated);
 
     return 0;
-
 }
