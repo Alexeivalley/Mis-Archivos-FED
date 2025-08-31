@@ -18,67 +18,111 @@ se definirá una estructura anidada para los datos del cantante, incluyendo su n
 
 const int ActualYear = 2025;
 
-struct Cantante{
+struct Cantante
+{
     std::string Name;
     std::string Nationality;
 };
 
-struct Album{
+struct Album
+{
     std::string AlbumName;
+    std::vector<std::pair<std::string, int>> Songs; // Titulo - Numero
+    Cantante Artista;
     int Year;
-    int AlbumNumer;
+    int AlbumNumber;
     int Old;
     // Vector de canciones - titulo - numero - antiguedad del álbum
     // Datos del cantante
 };
 
-struct Songs{
-    std::string SongTitle;
-    int Number;
-};
-
-void SolicitarDatos(std::vector<Album>& DatosAlbum, std::vector<Songs>& Canciones){
+void SolicitarDatos(std::vector<Album> &DatosAlbum, std::vector<Cantante> &DatosCantantes)
+{
     Album A;
-    Songs s;
     int CantSongs;
 
-    std::cout << "Nombre del Album: " << std::endl;
+    std::cout << "Nombre del Album: ";
     std::cin >> A.AlbumName;
-    std::cout << "Año de lanzamiento: " << std::endl;
-    std::cin >> A.AlbumNumer;
 
-    std::cout << "Cuantas canciones tiene? " << std::endl;
+    std::cout << "Año de lanzamiento: ";
+    std::cin >> A.Year;
+    A.Old = ActualYear - A.Year;
+
+    std::cout << "Numero de album: ";
+    std::cin >> A.AlbumNumber;
+
+    std::cout << "¿Cuantas canciones tiene? ";
     std::cin >> CantSongs;
 
-    for (size_t i = 1; i < CantSongs; i++){
-        
-        std::cout << "Titulo de la cancion numero: " << i << std::endl;
-        std::cin >> s.SongTitle;
-        s.SongTitle = i;
-        Canciones.push_back(s);
+    for (int i = 1; i <= CantSongs; i++)
+    {
+        std::string titulo;
+        std::cout << "Título de la canción número " << i << ": ";
+        std::cin >> titulo;
+        A.Songs.push_back({titulo, i});
     }
+
+    Cantante C;
+    std::cout << "Nombre del Cantante: ";
+    std::cin >> C.Name;
+
+    std::cout << "Nacionalidad del Cantante: ";
+    std::cin >> C.Nationality;
+
+    A.Artista = C;
+    // DatosCantantes.push_back(C);
+    DatosAlbum.push_back(A);
+}
+
+void MostrarAlbumes(const std::vector<Album> &DatosAlbum)
+{
+    if (DatosAlbum.empty())
+    {
+        std::cout << "No hay albumes registrados.\n";
+        return;
+    }
+
+    for (const auto &album : DatosAlbum)
+    {
+        std::cout << "-----------------------------------\n";
+        std::cout << "Álbum: " << album.AlbumName << "\n";
+        std::cout << "Número: " << album.AlbumNumber << "\n";
+        std::cout << "Ano: " << album.Year << " (Antiguedad: " << album.Old << " anos)\n";
+        std::cout << "Cantante: " << album.Artista.Name << " (" << album.Artista.Nationality << ")\n";
+        std::cout << "Canciones:\n";
+        for (const auto &song : album.Songs)
+        {
+            std::cout << "   " << song.second << ". " << song.first << "\n";
+        }
+    }
+    std::cout << "-----------------------------------\n"
+            << std::endl;
 }
 
 int main()
 {
-
     int opcion;
     std::vector<Album> DatosAlbum;
-    std::vector<Songs> Canciones;
+    std::vector<Cantante> DatosCantantes;
 
-    do{
+    do
+    {
+        system("cls");
         std::cout << "Programa para gestionar albumes musicales" << std::endl;
         std::cout << "Seleccione su opcion: " << std::endl;
-        std::cout << "1. Añadir album\n2. Mostrar Albumes\n3. Salir\n";
+        std::cout << "1. Anadir album\n2. Mostrar Albumes\n3. Salir\n";
         std::cin >> opcion;
 
         switch (opcion)
         {
         case 1:
-            SolicitarDatos(DatosAlbum, Canciones);
+            system("cls");
+            SolicitarDatos(DatosAlbum, DatosCantantes);
             break;
         case 2:
-        
+            system("cls");
+            MostrarAlbumes(DatosAlbum);
+            system("pause");
             break;
         case 3:
             std::cout << "Saliendo..." << std::endl;
